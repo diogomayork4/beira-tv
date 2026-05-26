@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beiramar Shopping - TV 2</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000; overflow: hidden; height: 100vh; width: 100vw; }
+        iframe { width: 100%; height: 100%; border: none; display: block; }
+        .loading { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 24px; font-family: Arial; }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">Carregando apresentação TV 2...</div>
+    <iframe id="presentation" src="" allow="autoplay; fullscreen" sandbox="allow-scripts allow-same-origin"></iframe>
+    <script>
+        const URL = 'https://docs.google.com/presentation/d/e/2PACX-1vQsQcp3MltuE_7eETZQpU6KoQO3fg7C3KcHjYYFLxtQJN__NDF24n_Mdo-n6uODg6_PbdMOlT10MZbw/embed?start=true&loop=true&delayms=60000';
+        const iframe = document.getElementById('presentation');
+        const loading = document.getElementById('loading');
+        
+        function load() {
+            console.log('Carregando apresentação TV 2:', new Date().toLocaleTimeString());
+            iframe.src = URL;
+        }
+        
+        iframe.onload = () => {
+            loading.style.display = 'none';
+            console.log('Apresentação carregada');
+        };
+        
+        load();
+        setInterval(load, 15 * 60 * 1000);
+        
+        setInterval(() => {
+            document.body.style.opacity = '0.99999';
+            setTimeout(() => document.body.style.opacity = '1', 10);
+        }, 60000);
+        
+        if ('wakeLock' in navigator) {
+            navigator.wakeLock.request('screen').catch(e => console.log('Wake Lock:', e));
+        }
+        
+        setTimeout(() => {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen().catch(e => console.log('Fullscreen:', e));
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
